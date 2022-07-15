@@ -1,10 +1,11 @@
 extends KinematicBody2D
 
-const MOVE_SPEED = 200
+const MOVE_SPEED = 15
 
 onready var raycast = $RayCast2D
 
 var player = null
+var health = 100.0
 
 func _ready():
 	add_to_group("zombies")
@@ -23,8 +24,10 @@ func _physics_process(delta):
 		if coll.name == "Player":
 			coll.kill()
 
-func kill():
-	queue_free()
+func take_damage(damage):
+	health -= damage
+	if health <= 0.0:
+		queue_free()
 
 func set_player(p):
 	player = p
