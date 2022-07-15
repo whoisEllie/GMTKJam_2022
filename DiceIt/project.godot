@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="tpdown_final"
-run/main_scene="res://World.tscn"
+run/main_scene="res://Levels/BoardGameScene.tscn"
 config/icon="res://icon.png"
 
 [input]
@@ -42,6 +42,16 @@ shoot={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="proc_gen"
+2d_physics/layer_2="player"
+
+[physics]
+
+2d/default_gravity=0
+
 [rendering]
 
+quality/driver/driver_name="GLES2"
 environment/default_environment="res://default_env.tres"

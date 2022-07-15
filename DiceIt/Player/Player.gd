@@ -25,9 +25,10 @@ func _physics_process(delta):
 	global_rotation = atan2(look_vec.y, look_vec.x)
 	
 	if Input.is_action_just_pressed("shoot"):
-		var coll = raycast.get_collider()
-		if raycast.is_colliding() and coll.has_method("kill"):
-			coll.kill()
+		var hit_collider = raycast.get_collider()
+		if raycast.is_colliding() and hit_collider.has_method("kill"):
+			hit_collider.kill()
 
 func kill():
+	# Needs implementation, return to global scene
 	get_tree().reload_current_scene()
