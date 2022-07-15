@@ -4,7 +4,7 @@
 [ext_resource path="res://soldier.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 20.0
+radius = 9.0
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -15,7 +15,8 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 17.5658, 0.35849 )
+position = Vector2( 1, 0 )
+scale = Vector2( 0.219895, 0.219895 )
 texture = ExtResource( 2 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
@@ -24,4 +25,4 @@ cast_to = Vector2( 2000, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 5, 5 )
+zoom = Vector2( 0.35, 0.35 )

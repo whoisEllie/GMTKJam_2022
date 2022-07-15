@@ -1,48 +1,53 @@
 extends Node2D
 
 
-var Room = preload("res://Procedural_Generation/Room.tscn")
-
-var tile_size = 32
-var num_rooms = 50
-var min_size = 4
-var max_size = 10
-var hspread = 40
-var vspread = 100
-var cull_percent = 0.35
+var noise
+var map_size = Vector2(300, 200)
+var grass_cap = 0.5
+var road_caps = Vector2(0.3, 0.05)
+var environment_caps = Vector3(0.4, 0.3, 0.04)
 
 func _ready():
-	randomize()
-	make_rooms()
+	noise = OpenSimplexNoise.new()
+	noise.octaves = 1.0
+	noise.period = 12
+	noise.seed = randi()
+	make_grass_map()
+	make_road_map()
+	make_environment_map()
+	make_background()
 	
-func make_rooms():
-	for i in range(num_rooms):
-		var pos = Vector2(rand_range(-hspread, hspread), rand_range(-vspread, vspread))
-		var r = Room.instance()
-		var w = min_size + randi() % (max_size - min_size)
-		var h = min_size + randi() % (max_size - min_size)
-		r.make_room(pos, Vector2(w, h) * tile_size)
-		$Rooms.add_child(r)
-	# wait for rooms to stop moving
-	yield(get_tree().create_timer(1.1), 'timeout')
-	# cull rooms
-	var cull_amount : int = int($Rooms.get_child_count()*cull_percent)
-	for i in range(cull_amount):
-		var room = $Rooms.get_child(randi() % ($Rooms.get_child_count()))
-		room.queue_free()
-	for room in $Rooms.get_children():
-		room.mode = RigidBody2D.MODE_STATIC
+func make_grass_map():
+	for x in map_size.x:
+		for y in map_size.y:
+			var a = noise.get_noise_2d(x,y)
+			if a < grass_cap:
+				$Grass.set_cell(x, y, 0)
+	$Grass.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
 
-func _draw():
-	for room in $Rooms.get_children():
-		draw_rect(Rect2(room.position - room.size, room.size * 2),
-		Color(32, 228, 0), false)
-		
-func _process(delta):
-	update()
+func make_road_map():
+	for x in map_size.x:
+		for y in map_size.y:
+			var a = noise.get_noise_2d(x,y)
+			if a < road_caps.x and a > road_caps.y:
+				$Roads.set_cell(x, y, 0)
+	$Roads.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
 
-func _input(event):
-	if event.is_action_pressed('ui_select'):
-		for n in $Rooms.get_children():
-			n.queue_free()
-		make_rooms()
+func make_environment_map():
+	for x in map_size.x:
+		for y in map_size.y:
+			var a = noise.get_noise_2d(x, y)
+			if a < environment_caps.x and a > environment_caps.y or a < environment_caps.z:
+				var chance = randi() % 100
+				if chance < 2:
+					var num = randi() % 4
+					$Environment.set_cell(x, y, num)
+
+func make_background():
+	for x in map_size.x:
+		for y in map_size.y:
+			if $Grass.get_cell(x,y) == -1:
+				if $Grass.get_cell(x,y-1) == 0:
+					$Background.set_cell(x,y,0)
+					
+	$Background.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
