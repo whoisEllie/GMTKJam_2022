@@ -1,11 +1,10 @@
 extends Area2D
 
-const TILE_AMOUNT = 100
+const TILE_AMOUNT = 15
 const OFFSET = 160
 const START_OFFSET = 80
 const TILE_SCALE = 2.3
 # Declare member variables here. Examples:
-var tileIDs = []
 var tiles = []
 
 var objects_dict = {0: "Grass", 1: "Snow", 2: "Random"}
@@ -17,7 +16,13 @@ var start_texture = preload("res://Assets/Start-Block.png")
 
 	
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func generate_tiles():
+	for i in range (TILE_AMOUNT):
+		vars.tile_ids.append(randi() % 3)
+		
+func load_tiles():
+	tiles.clear()
+	
 	# generates random array of tiles for the playing board
 	var start_sprite = Sprite.new()
 	add_child(start_sprite)
@@ -26,12 +31,8 @@ func _ready():
 	start_sprite.position = Vector2(START_OFFSET, ProjectSettings.get_setting("display/window/size/height")/2)
 	tiles.append(start_sprite)
 	
-	
-	
-	for i in range (TILE_AMOUNT):
-		tileIDs.append(randi() % 3)
-		print(objects_dict[tileIDs[i]])
-		if tileIDs[i] == 0:	
+	for i in range(vars.tile_ids.size()):
+		if vars.tile_ids[i] == 0:	
 			var grass_sprite = Sprite.new()
 			add_child(grass_sprite)
 			grass_sprite.set_texture(grass_texture)
@@ -40,7 +41,7 @@ func _ready():
 			tiles.append(grass_sprite)
 			
 			
-		if tileIDs[i] == 1:		
+		if vars.tile_ids[i] == 1:		
 			var snow_sprite = Sprite.new()
 			add_child(snow_sprite)
 			snow_sprite.set_texture(snow_texture)
@@ -48,7 +49,7 @@ func _ready():
 			snow_sprite.position = Vector2(START_OFFSET + (OFFSET * tiles.size()), ProjectSettings.get_setting("display/window/size/height")/2)
 			tiles.append(snow_sprite)
 
-		if tileIDs[i] == 2:			
+		if vars.tile_ids[i] == 2:			
 			var randomblock_sprite = Sprite.new()
 			add_child(randomblock_sprite)
 			randomblock_sprite.set_texture(randomblock_texture)
@@ -63,7 +64,13 @@ func _ready():
 	finalblock_sprite.position = Vector2(START_OFFSET + (OFFSET * tiles.size()), ProjectSettings.get_setting("display/window/size/height")/2)
 	tiles.append(finalblock_sprite)
 	
+	print("tiles: ")
 	print(tiles)
+	
+	vars.tile_set.clear()
+	vars.tile_set = tiles
+	print(vars.tile_set)
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

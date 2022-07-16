@@ -11,8 +11,12 @@ config_version=4
 [application]
 
 config/name="tpdown_final"
-run/main_scene="res://Levels/BoardGameScene.tscn"
+run/main_scene="res://Levels/SceneManager.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+vars="*res://Levels/vars.gd"
 
 [display]
 

@@ -27,8 +27,6 @@ func _ready():
 	timer.one_shot = true;
 	add_child(timer)
 	timer.start()
-
-
 	
 func make_grass_map():
 	for x in map_size.x:
