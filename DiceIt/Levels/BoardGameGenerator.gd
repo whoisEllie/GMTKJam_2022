@@ -30,6 +30,7 @@ func _ready():
 			add_child(grass_sprite)
 			grass_texture = preload("res://Assets/grass.png")
 			grass_sprite.set_texture(grass_texture)
+			grass_sprite.set_scale(Vector2(2.3, 2.3))
 			grass_sprite.position = Vector2(START_OFFSET + (OFFSET * i), ProjectSettings.get_setting("display/window/size/height")/2)
 			
 			
@@ -46,6 +47,7 @@ func _ready():
 			add_child(snow_sprite)
 			snow_texture = preload("res://Assets/snow.png")
 			snow_sprite.set_texture(snow_texture)
+			snow_sprite.set_scale(Vector2(2.3, 2.3))
 			snow_sprite.position = Vector2(START_OFFSET + (OFFSET * i), ProjectSettings.get_setting("display/window/size/height")/2)
 
 
