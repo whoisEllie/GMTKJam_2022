@@ -1,11 +1,16 @@
 extends Node2D
 
+const DICE_AMOUNT = 3
+const DicePickup = preload("res://Scenes/DicePickup.tscn")
+
 var noise
-var map_size = Vector2(300, 200)
+var map_size = Vector2(50, 50)
 var grass_cap = 0.5
 var road_caps = Vector2(0.3, 0.05)
 var environment_caps = Vector3(0.4, 0.3, 0.04)
 var timer = Timer.new()
+
+var dice = []
 
 signal level_changed(level_name)
 
@@ -21,9 +26,11 @@ func _ready():
 	make_environment_map()
 	make_background()
 	fill_rest()
+	spawn_dice()
+	draw_rect(Rect2(Vector2(0,0), map_size*16), Color(255, 0, 0, 255), true, 16.0)
 
 	timer.connect("timeout", self, "change_scene")
-	timer.wait_time = 10.0
+	timer.wait_time = vars.round_time
 	timer.one_shot = true;
 	add_child(timer)
 	timer.start()
@@ -70,6 +77,13 @@ func fill_rest():
 				$Collision.set_cell(x,y,0)
 					
 	$Collision.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
+	
+func spawn_dice():
+	for i in DICE_AMOUNT:
+		var new_dice = DicePickup.instance()
+		new_dice.position = Vector2(rand_range(0, map_size.x*16), rand_range(0, map_size.y*16))
+		dice.append(new_dice)
+		add_child(new_dice)
 
 
 func change_scene():

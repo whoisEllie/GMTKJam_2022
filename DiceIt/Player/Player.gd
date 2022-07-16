@@ -13,7 +13,7 @@ func _ready():
 	$AudioStreamPlayer2D.stream = ShotgunSound
 	
 	timer.connect("timeout", self, "timeout")
-	timer.wait_time = 10.0
+	timer.wait_time = vars.round_time
 	timer.one_shot = true;
 	add_child(timer)
 	timer.start()
@@ -34,6 +34,7 @@ func _physics_process(delta):
 	var look_vec = get_global_mouse_position() - global_position
 	global_rotation = atan2(look_vec.y, look_vec.x)
 	
+	# shooting
 	if Input.is_action_just_pressed("shoot"):
 		if $AudioStreamPlayer2D.is_playing():
 			$AudioStreamPlayer2D.stop()
@@ -43,7 +44,10 @@ func _physics_process(delta):
 			if ray.is_colliding() and hit_collider.has_method("take_damage"):
 				hit_collider.take_damage(ShotgunDamage)
 				
+	# updating time
 	$CanvasLayer/Control/RichTextLabel.text = String(timer.time_left)
+	
+	# coin picku
 
 func kill():
 	# Needs implementation, return to global scene

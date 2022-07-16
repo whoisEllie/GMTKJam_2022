@@ -21,6 +21,10 @@ func load_tiles():
 		$BoardGamePlayer.transform = vars.tile_set[vars.current_tile].get_transform()
 	target_tile = vars.current_tile
 	target_position = vars.tile_set[vars.current_tile].position
+	
+	target_tile = target_tile + roll_dice(vars.collected_dice)
+	vars.collected_dice = 0
+	move_forward_one()
 
 func _input(event):
 	# only for debug!!!
