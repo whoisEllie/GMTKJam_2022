@@ -15,7 +15,7 @@ var randomblock_texture = preload("res://Assets/Random-Block.png")
 var finalmblock_texture = preload("res://Assets/Finish-Block.png")
 var start_texture = preload("res://Assets/Start-Block.png")
 
-
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# generates random array of tiles for the playing board

@@ -5,7 +5,9 @@
 [ext_resource path="res://Player/BoardGamePlayer.tscn" type="PackedScene" id=3]
 
 [node name="Node2D" type="Node2D"]
+rotation = 0.00242126
 script = ExtResource( 1 )
+level_name = "BoardGame"
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 2 )
@@ -13,3 +15,4 @@ script = ExtResource( 2 )
 [node name="BoardGamePlayer" parent="." instance=ExtResource( 3 )]
 
 [node name="Timer" type="Timer" parent="."]
+one_shot = true

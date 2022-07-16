@@ -13,14 +13,11 @@ func _ready():
 	$AudioStreamPlayer2D.stream = ShotgunSound
 	
 	timer.connect("timeout", self, "timeout")
-	timer.wait_time = 60.0
+	timer.wait_time = 10.0
 	timer.one_shot = true;
 	add_child(timer)
 	timer.start()
 	
-func timeout():
-	get_tree().reload_current_scene()
-
 func _physics_process(delta):
 	var move_vec = Vector2()
 	if Input.is_action_pressed("move_up"):

@@ -5,6 +5,11 @@ var map_size = Vector2(300, 200)
 var grass_cap = 0.5
 var road_caps = Vector2(0.3, 0.05)
 var environment_caps = Vector3(0.4, 0.3, 0.04)
+var timer = Timer.new()
+
+signal level_changed(level_name)
+
+export (String) var level_name = "level"
 
 func _ready():
 	noise = OpenSimplexNoise.new()
@@ -16,6 +21,14 @@ func _ready():
 	make_environment_map()
 	make_background()
 	fill_rest()
+
+	timer.connect("timeout", self, "change_scene")
+	timer.wait_time = 10.0
+	timer.one_shot = true;
+	add_child(timer)
+	timer.start()
+
+
 	
 func make_grass_map():
 	for x in map_size.x:
@@ -59,3 +72,7 @@ func fill_rest():
 				$Collision.set_cell(x,y,0)
 					
 	$Collision.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
+
+
+func change_scene():
+	emit_signal("level_changed", level_name)
