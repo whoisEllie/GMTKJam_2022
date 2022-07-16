@@ -15,6 +15,7 @@ func _ready():
 	make_road_map()
 	make_environment_map()
 	make_background()
+	fill_rest()
 	
 func make_grass_map():
 	for x in map_size.x:
@@ -50,3 +51,11 @@ func make_background():
 					$Background.set_cell(x,y,0)
 					
 	$Background.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
+
+func fill_rest():
+	for x in map_size.x:
+		for y in map_size.y:
+			if $Grass.get_cell(x,y) != 0:
+				$Collision.set_cell(x,y,0)
+					
+	$Collision.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
