@@ -5,10 +5,21 @@ onready var raycast =[$Trace1, $Trace2, $Trace3, $Trace4, $Trace5]
 var ShotgunSound = preload("res://Audio/12-Gauge-Pump-Action-Shotgun-Close-Gunshot-A-www.fesliyanstudios.com.mp3")
 var ShotgunDamage = 10.0
 
+var timer = Timer.new()
+
 func _ready():
 	yield(get_tree(), "idle_frame")
 	get_tree().call_group("zombies", "set_player", self)
 	$AudioStreamPlayer2D.stream = ShotgunSound
+	
+	timer.connect("timeout", self, "timeout")
+	timer.wait_time = 60.0
+	timer.one_shot = true;
+	add_child(timer)
+	timer.start()
+	
+func timeout():
+	get_tree().reload_current_scene()
 
 func _physics_process(delta):
 	var move_vec = Vector2()
@@ -34,7 +45,10 @@ func _physics_process(delta):
 			var hit_collider = ray.get_collider()
 			if ray.is_colliding() and hit_collider.has_method("take_damage"):
 				hit_collider.take_damage(ShotgunDamage)
+				
+	$CanvasLayer/Control/RichTextLabel.text = String(timer.time_left)
 
 func kill():
 	# Needs implementation, return to global scene
 	get_tree().reload_current_scene()
+

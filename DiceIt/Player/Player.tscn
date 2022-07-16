@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://soldier.png" type="Texture" id=2]
+[ext_resource path="res://UI/Level_UI.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 9.0
@@ -49,3 +50,9 @@ collision_mask = 2
 enabled = true
 cast_to = Vector2( 2000, 100 )
 collision_mask = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0

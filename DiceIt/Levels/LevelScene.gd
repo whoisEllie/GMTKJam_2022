@@ -1,6 +1,5 @@
 extends Node2D
 
-
 var noise
 var map_size = Vector2(300, 200)
 var grass_cap = 0.5
