@@ -51,4 +51,3 @@ func _physics_process(delta):
 func kill():
 	# Needs implementation, return to global scene
 	get_tree().reload_current_scene()
-
