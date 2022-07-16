@@ -2,4 +2,4 @@
 
 ***
 
-This is a webhook test
+Project for GMTK Game Jam 2022
