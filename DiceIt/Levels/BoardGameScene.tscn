@@ -11,3 +11,5 @@ script = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="BoardGamePlayer" parent="." instance=ExtResource( 3 )]
+
+[node name="Timer" type="Timer" parent="."]
