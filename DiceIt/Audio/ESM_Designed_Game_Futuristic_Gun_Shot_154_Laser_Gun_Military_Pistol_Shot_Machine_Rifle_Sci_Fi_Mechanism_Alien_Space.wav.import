@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_Designed_Game_Futuristic_Gun_Shot_154_Laser_Gun_Military_Pistol_Shot_Machine_Rifle_Sci_Fi_Mechanism_Alien_Space.wav-5b4b9ef93479c3e12b2ffa1f383c04f4.sample"
+
+[deps]
+
+source_file="res://Audio/ESM_Designed_Game_Futuristic_Gun_Shot_154_Laser_Gun_Military_Pistol_Shot_Machine_Rifle_Sci_Fi_Mechanism_Alien_Space.wav"
+dest_files=[ "res://.import/ESM_Designed_Game_Futuristic_Gun_Shot_154_Laser_Gun_Military_Pistol_Shot_Machine_Rifle_Sci_Fi_Mechanism_Alien_Space.wav-5b4b9ef93479c3e12b2ffa1f383c04f4.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

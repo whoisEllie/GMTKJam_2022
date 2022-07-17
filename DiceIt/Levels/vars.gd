@@ -12,3 +12,6 @@ var round_time = 20.0
 var movement_speed = 150
 var friction = 0.3
 var acceleration = 0.15
+
+# bullet movement modifiers
+var bullet_speed = 400
