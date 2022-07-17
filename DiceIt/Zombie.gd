@@ -18,11 +18,6 @@ func _physics_process(delta):
 	vec_to_player = vec_to_player.normalized()
 	global_rotation = atan2(vec_to_player.y, vec_to_player.x)
 	move_and_collide(vec_to_player * MOVE_SPEED * delta)
-	
-	if raycast.is_colliding():
-		var coll = raycast.get_collider()
-		if coll.name == "Player":
-			coll.kill()
 
 func take_damage(damage):
 	health -= damage
@@ -31,3 +26,13 @@ func take_damage(damage):
 
 func set_player(p):
 	player = p
+
+
+func _on_Area2D_body_entered(body):
+	print("test")
+
+
+func _on_Area2D_area_entered(area):
+	take_damage(vars.bullet_damage)
+		
+

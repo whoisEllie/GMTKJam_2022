@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TopDownCharSpriteSheet.png" type="Texture" id=2]
 [ext_resource path="res://UI/Level_UI.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Pistol.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Bullet.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Eyes.png" type="Texture" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -45,8 +46,11 @@ animations = [ {
 "frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 3 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
 "loop": true,
 "name": "Idle",
-"speed": 5.0
+"speed": 8.0
 } ]
+
+[sub_resource type="CircleShape2D" id=12]
+radius = 1.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 21.0
@@ -59,7 +63,7 @@ bullet = ExtResource( 5 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 0.35, 0.35 )
+zoom = Vector2( 0.5, 0.5 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
@@ -76,6 +80,20 @@ shape = SubResource( 1 )
 position = Vector2( 0, -9 )
 frames = SubResource( 11 )
 animation = "Idle"
+frame = 7
+playing = true
+
+[node name="EyesArea" type="Area2D" parent="CollisionShape2D/Sprite"]
+
+[node name="EyesArc" type="CollisionShape2D" parent="CollisionShape2D/Sprite/EyesArea"]
+position = Vector2( 0, -12 )
+shape = SubResource( 12 )
+
+[node name="Position2D" type="Position2D" parent="CollisionShape2D/Sprite/EyesArea/EyesArc"]
+
+[node name="Eyes" type="Sprite" parent="CollisionShape2D/Sprite/EyesArea/EyesArc/Position2D"]
+position = Vector2( 1, 0 )
+texture = ExtResource( 6 )
 
 [node name="GunArc" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -10 )

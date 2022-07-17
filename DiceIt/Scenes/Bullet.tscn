@@ -7,9 +7,10 @@
 radius = 3.0
 height = 12.0
 
-[node name="Node2D" type="Area2D"]
+[node name="Area2D" type="Area2D"]
 scale = Vector2( 3, 3 )
-collision_layer = 0
+collision_layer = 8
+collision_mask = 8
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -20,3 +21,6 @@ shape = SubResource( 1 )
 position = Vector2( 0.5, 0 )
 rotation = -1.57484
 texture = ExtResource( 1 )
+
+[connection signal="body_entered" from="." to="." method="_on_Node2D_body_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Area2D_body_entered"]

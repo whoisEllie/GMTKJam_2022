@@ -5,8 +5,12 @@ var ShotgunSound = preload("res://Audio/ESM_Designed_Game_Futuristic_Gun_Shot_15
 export (PackedScene) var bullet
 var ShotgunDamage = 10.0
 var velocity = Vector2()
-	
+var rng = RandomNumberGenerator.new()
+
+var should_fire = true
+
 var timer = Timer.new()
+var shoot_timer = Timer.new()
 
 func _ready():
 	yield(get_tree(), "idle_frame")
@@ -18,6 +22,11 @@ func _ready():
 	timer.one_shot = true;
 	add_child(timer)
 	timer.start()
+	
+	shoot_timer.connect("timeout", self, "shoot")
+	timer.one_shot = false;
+	add_child(shoot_timer)
+	
 	
 	
 func get_input():
@@ -43,27 +52,37 @@ func _physics_process(delta):
 		velocity = lerp(velocity, Vector2.ZERO, vars.friction)
 	velocity = move_and_slide(velocity)
 	
+	# updating time
+	$CanvasLayer/Control/RichTextLabel.text = String(timer.time_left)
+	
+	if $CollisionShape2D/Sprite.frame == 4:
+		$CollisionShape2D/Sprite/EyesArea.translate(Vector2(0.0, -0.1))
+	if $CollisionShape2D/Sprite.frame == 0:
+		$CollisionShape2D/Sprite/EyesArea.translate(Vector2(0.0, 0.1))
+		
+func _process(delta):
 	# weapon rotation
 	var look_vec = get_global_mouse_position() - global_position
 	$GunArc.rotation = atan2(look_vec.y, look_vec.x)
-
-	# updating time
-	$CanvasLayer/Control/RichTextLabel.text = String(timer.time_left)
+	$CollisionShape2D/Sprite/EyesArea/EyesArc.rotation = atan2(look_vec.y, look_vec.x)
+	
+	# shooting
+	if Input.is_action_just_pressed("shoot"):
+		shoot()
+		shoot_timer.set_wait_time(vars.shot_delay)
+		shoot_timer.start()
+	if Input.is_action_just_released("shoot"):
+		shoot_timer.stop()
 
 func kill():
 	# Needs implementation, return to global scene
 	print("dead")
 	
 func shoot():
-	var b = bullet.instance()
-	get_parent().add_child(b)
-	var bullet_transform = $GunArc/Sprite/BulletSpawnPoint.global_transform
-	b.transform = Transform2D(bullet_transform.get_rotation() + (10.0 * (PI/180)), bullet_transform.get_origin())
-	
-func _input(event):
-	# shooting
-	if Input.is_action_just_pressed("shoot"):
-		if $AudioStreamPlayer2D.is_playing():
-			$AudioStreamPlayer2D.stop()
-		$AudioStreamPlayer2D.play()
-		shoot()
+	$AudioStreamPlayer2D.play()
+	for i in range(vars.bullet_amount):
+		var b = bullet.instance()
+		get_parent().add_child(b)
+		var bullet_transform = $GunArc/Sprite/BulletSpawnPoint.global_transform
+		rng.randomize()
+		b.transform = Transform2D(bullet_transform.get_rotation() + (rng.randf_range(-vars.bullet_spread, vars.bullet_spread) * (PI/180)), bullet_transform.get_origin())
