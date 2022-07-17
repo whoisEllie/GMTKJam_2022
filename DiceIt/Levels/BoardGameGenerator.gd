@@ -1,10 +1,9 @@
 extends Area2D
 
-const TILE_AMOUNT = 15
+const TILE_AMOUNT = 30
 const OFFSET = 160
 const START_OFFSET = 80
 const TILE_SCALE = 2.3
-# Declare member variables here. Examples:
 var tiles = []
 
 var objects_dict = {0: "Grass", 1: "Snow", 2: "Random"}
@@ -40,8 +39,7 @@ func load_tiles():
 			grass_sprite.position = Vector2(START_OFFSET + (OFFSET * tiles.size()), ProjectSettings.get_setting("display/window/size/height")/2)
 			tiles.append(grass_sprite)
 			
-			
-		if vars.tile_ids[i] == 1:		
+		if vars.tile_ids[i] == 1:	
 			var snow_sprite = Sprite.new()
 			add_child(snow_sprite)
 			snow_sprite.set_texture(snow_texture)
@@ -49,7 +47,7 @@ func load_tiles():
 			snow_sprite.position = Vector2(START_OFFSET + (OFFSET * tiles.size()), ProjectSettings.get_setting("display/window/size/height")/2)
 			tiles.append(snow_sprite)
 
-		if vars.tile_ids[i] == 2:			
+		if vars.tile_ids[i] == 2:	
 			var randomblock_sprite = Sprite.new()
 			add_child(randomblock_sprite)
 			randomblock_sprite.set_texture(randomblock_texture)
@@ -64,12 +62,8 @@ func load_tiles():
 	finalblock_sprite.position = Vector2(START_OFFSET + (OFFSET * tiles.size()), ProjectSettings.get_setting("display/window/size/height")/2)
 	tiles.append(finalblock_sprite)
 	
-	print("tiles: ")
-	print(tiles)
-	
 	vars.tile_set.clear()
 	vars.tile_set = tiles
-	print(vars.tile_set)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

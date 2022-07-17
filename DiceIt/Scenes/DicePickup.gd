@@ -15,8 +15,7 @@ func _ready():
 
 
 func _on_DicePickup_body_entered(body):
-	print("YES")
 	if body.name == "Player":
-		vars.collected_dice += 1
+		vars.collected_dice += 1	
 		queue_free()
 	

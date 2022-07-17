@@ -13,6 +13,7 @@ level_name = "BoardGame"
 script = ExtResource( 2 )
 
 [node name="BoardGamePlayer" parent="." instance=ExtResource( 3 )]
+scale = Vector2( 2.3, 2.3 )
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

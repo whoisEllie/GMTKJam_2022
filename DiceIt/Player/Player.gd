@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
-const MOVE_SPEED = 100
 onready var raycast =[$Trace1, $Trace2, $Trace3, $Trace4, $Trace5]
 var ShotgunSound = preload("res://Audio/12-Gauge-Pump-Action-Shotgun-Close-Gunshot-A-www.fesliyanstudios.com.mp3")
 var ShotgunDamage = 10.0
-
+var velocity = Vector2()
+	
 var timer = Timer.new()
 
 func _ready():
@@ -18,18 +18,27 @@ func _ready():
 	add_child(timer)
 	timer.start()
 	
-func _physics_process(delta):
-	var move_vec = Vector2()
+	
+func get_input():
+	var input = Vector2()
 	if Input.is_action_pressed("move_up"):
-		move_vec.y -= 1
+		input.y -= 1
 	if Input.is_action_pressed("move_down"):
-		move_vec.y += 1
+		input.y += 1
 	if Input.is_action_pressed("move_left"):
-		move_vec.x -= 1
+		input.x -= 1
 	if Input.is_action_pressed("move_right"):
-		move_vec.x += 1
-	move_vec = move_vec.normalized()
-	move_and_collide(move_vec * MOVE_SPEED * delta)
+		input.x += 1
+	return input
+	
+
+func _physics_process(delta):
+	var direction = get_input()
+	if direction.length() > 0:
+		velocity = lerp(velocity, direction.normalized() * vars.movement_speed, vars.acceleration)
+	else:
+		velocity = lerp(velocity, Vector2.ZERO, vars.friction)
+	velocity = move_and_slide(velocity)
 	
 	var look_vec = get_global_mouse_position() - global_position
 	global_rotation = atan2(look_vec.y, look_vec.x)

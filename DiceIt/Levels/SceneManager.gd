@@ -16,8 +16,21 @@ func _ready() -> void:
 func handle_level_changed(current_level_name: String):
 	match current_level_name:
 		"BoardGame":
-			next_level = load("res://Levels/LevelScene.tscn").instance()
-			loadtiles = false
+			print(vars.tile_ids[vars.current_tile-1])
+			match vars.tile_ids[vars.current_tile-1]:
+				0:
+					next_level = load("res://Levels/GrassTopDownScene.tscn").instance()
+					loadtiles = false
+					print("grass")
+				1:
+					next_level = load("res://Levels/SnowTopDownScene.tscn").instance()
+					loadtiles = false
+					print("snow")
+				2:
+					next_level = load("res://Levels/GrassTopDownScene.tscn").instance()
+					loadtiles = false
+					print("random effect")
+
 		"TopDown":
 			next_level = load("res://Levels/BoardGameScene.tscn").instance()
 			loadtiles = true

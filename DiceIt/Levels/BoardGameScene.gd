@@ -3,6 +3,7 @@ extends Node2D
 var target_tile = 0
 var target_position = Vector2(80.0, ProjectSettings.get_setting("display/window/size/height")/2)
 var duration = 0.5 # length of the interpolation
+var rng = RandomNumberGenerator.new()
 
 signal level_changed(level_name)
 
@@ -29,7 +30,7 @@ func load_tiles():
 func _input(event):
 	# only for debug!!!
 	if event.is_action_pressed("ui_accept"):
-		target_tile = target_tile + roll_dice(3)
+		target_tile = target_tile + roll_dice(1)
 		move_forward_one()
 
 func move_forward_one():
@@ -49,9 +50,10 @@ func move_forward_one():
 
 
 func roll_dice(amount):
+	rng.randomize()
 	var spaces_to_move = 0
 	for i in range (amount):
-		var add = int(rand_range(1, 7))
+		var add = rng.randi_range(1, 6)
 		spaces_to_move += add
 		print(String(add))
 	print("Added random " + String(spaces_to_move))

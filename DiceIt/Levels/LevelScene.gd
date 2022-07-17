@@ -9,6 +9,7 @@ var grass_cap = 0.5
 var road_caps = Vector2(0.3, 0.05)
 var environment_caps = Vector3(0.4, 0.3, 0.04)
 var timer = Timer.new()
+var rng = RandomNumberGenerator.new()
 
 var dice = []
 
@@ -81,7 +82,8 @@ func fill_rest():
 func spawn_dice():
 	for i in DICE_AMOUNT:
 		var new_dice = DicePickup.instance()
-		new_dice.position = Vector2(rand_range(0, map_size.x*16), rand_range(0, map_size.y*16))
+		rng.randomize()
+		new_dice.position = Vector2(rng.randf_range(0, map_size.x*16), rng.randf_range(0, map_size.y*16))
 		dice.append(new_dice)
 		add_child(new_dice)
 
