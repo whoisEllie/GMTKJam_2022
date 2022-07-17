@@ -26,6 +26,5 @@ size_flags_horizontal = 2
 theme = SubResource( 1 )
 custom_fonts/mono_font = SubResource( 2 )
 custom_fonts/normal_font = SubResource( 3 )
-text = "58"
 scroll_active = false
 script = ExtResource( 2 )

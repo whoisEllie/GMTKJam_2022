@@ -1,10 +1,12 @@
 extends Area2D
 
-const TILE_AMOUNT = 30
+const TILE_AMOUNT = 100
 const OFFSET = 160
 const START_OFFSET = 80
 const TILE_SCALE = 2.3
 var tiles = []
+
+var rng = RandomNumberGenerator.new()
 
 var objects_dict = {0: "Grass", 1: "Snow", 2: "Random"}
 var grass_texture = preload("res://Assets/grass.png")
@@ -17,7 +19,8 @@ var start_texture = preload("res://Assets/Start-Block.png")
 # Called when the node enters the scene tree for the first time.
 func generate_tiles():
 	for i in range (TILE_AMOUNT):
-		vars.tile_ids.append(randi() % 3)
+		rng.randomize()
+		vars.tile_ids.append(rng.randi_range(0,2))
 		
 func load_tiles():
 	tiles.clear()

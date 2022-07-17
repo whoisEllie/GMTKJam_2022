@@ -24,7 +24,7 @@ func _ready():
 	timer.start()
 	
 	shoot_timer.connect("timeout", self, "shoot")
-	timer.one_shot = false;
+	shoot_timer.one_shot = false;
 	add_child(shoot_timer)
 	
 	
@@ -53,7 +53,8 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 	
 	# updating time
-	$CanvasLayer/Control/RichTextLabel.text = String(timer.time_left)
+	if vars.scene_type != 2:
+		$CanvasLayer/Control/RichTextLabel.text = String(stepify(timer.time_left, 0.01))
 	
 	if $CollisionShape2D/Sprite.frame == 4:
 		$CollisionShape2D/Sprite/EyesArea.translate(Vector2(0.0, -0.1))

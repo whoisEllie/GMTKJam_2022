@@ -7,6 +7,7 @@ var collected_dice: int = 0
 var tile_ids = []
 var tile_set = []
 var round_time = 20.0
+var scene_type: int = 0
 
 # player modifier variables
 var movement_speed = 200

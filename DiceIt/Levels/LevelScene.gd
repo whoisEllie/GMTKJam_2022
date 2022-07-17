@@ -21,7 +21,8 @@ func _ready():
 	noise = OpenSimplexNoise.new()
 	noise.octaves = 1.0
 	noise.period = 12
-	noise.seed = randi()
+	rng.randomize()
+	noise.seed = rng.randi()
 	make_grass_map()
 	make_road_map()
 	make_environment_map()
