@@ -4,7 +4,7 @@ const DICE_AMOUNT = 3
 const DicePickup = preload("res://Scenes/DicePickup.tscn")
 
 var noise
-var map_size = Vector2(50, 50)
+var map_size = Vector2(80, 60)
 var grass_cap = 0.5
 var road_caps = Vector2(0.3, 0.05)
 var environment_caps = Vector3(0.4, 0.3, 0.04)
@@ -73,10 +73,10 @@ func make_background():
 	$Background.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
 
 func fill_rest():
-	for x in map_size.x:
-		for y in map_size.y:
-			if $Grass.get_cell(x,y) != 0:
-				$Collision.set_cell(x,y,0)
+	for x in (map_size.x + 2):
+		for y in (map_size.y + 2):
+			if $Grass.get_cell(x-1,y-1) != 0:
+				$Collision.set_cell(x-1,y-1,0)
 					
 	$Collision.update_bitmask_region(Vector2(0.0, 0.0), Vector2(map_size.x, map_size.y))
 	
@@ -84,7 +84,10 @@ func spawn_dice():
 	for i in DICE_AMOUNT:
 		var new_dice = DicePickup.instance()
 		rng.randomize()
-		new_dice.position = Vector2(rng.randf_range(0, map_size.x*16), rng.randf_range(0, map_size.y*16))
+		var rand_x = rng.randf_range(0, (map_size.x*16))
+		rng.randomize()
+		var rand_y = rng.randf_range(0, (map_size.y*16))
+		new_dice.position = Vector2(rng.randf_range(0, rand_x), rng.randf_range(0, rand_y))
 		dice.append(new_dice)
 		add_child(new_dice)
 

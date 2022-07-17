@@ -11,7 +11,23 @@ var loadtiles = false
 func _ready() -> void:
 	current_level.generate_tiles()
 	current_level.connect("level_changed", self, "handle_level_changed")
+	vars.collected_dice = 1
+	
+	var timer = Timer.new()
+	timer.connect("timeout", self, "roll_and_move")
+	timer.wait_time = 5
+	timer.one_shot = true;
+	add_child(timer)
+	timer.start()
+	
 
+
+func roll_and_move():
+	current_level.target_tile = vars.current_tile
+	current_level.target_position = vars.tile_set[vars.current_tile].position
+	current_level.target_tile = current_level.target_tile + current_level.roll_dice()
+	vars.collected_dice = 0
+	current_level.move_forward_one()
 
 func handle_level_changed(current_level_name: String):
 	match current_level_name:

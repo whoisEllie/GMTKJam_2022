@@ -22,16 +22,16 @@ func load_tiles():
 		$BoardGamePlayer.transform = vars.tile_set[vars.current_tile].get_transform()
 	target_tile = vars.current_tile
 	target_position = vars.tile_set[vars.current_tile].position
-	
-	target_tile = target_tile + roll_dice(vars.collected_dice)
+	target_tile = target_tile + roll_dice()
 	vars.collected_dice = 0
 	move_forward_one()
 
 func _input(event):
+	pass
 	# only for debug!!!
-	if event.is_action_pressed("ui_accept"):
-		target_tile = target_tile + roll_dice(1)
-		move_forward_one()
+#	if event.is_action_pressed("ui_accept"):
+#		target_tile = target_tile + roll_dice(1)
+#		move_forward_one()
 
 func move_forward_one():
 	if vars.current_tile < target_tile:
@@ -49,10 +49,10 @@ func move_forward_one():
 		change_scene()
 
 
-func roll_dice(amount):
+func roll_dice():
 	rng.randomize()
 	var spaces_to_move = 0
-	for i in range (amount):
+	for i in range (vars.collected_dice):
 		var add = rng.randi_range(1, 6)
 		spaces_to_move += add
 		print(String(add))

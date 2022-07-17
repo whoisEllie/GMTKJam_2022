@@ -12,4 +12,5 @@ func _ready():
 
 
 func change_scene():
+	vars.collected_dice = 1
 	emit_signal("level_changed", level_name)
