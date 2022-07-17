@@ -13,6 +13,7 @@ func _ready():
 	timer.one_shot = true;
 	add_child(timer)
 	$AudioStreamPlayer2D.stream = thunder
+	$CanvasLayer/Control/RichTextLabel.text = ""
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
