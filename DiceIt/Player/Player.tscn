@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/TopDownCharSpriteSheet.png" type="Texture" id=2]
@@ -55,7 +55,10 @@ radius = 1.0
 [sub_resource type="CircleShape2D" id=2]
 radius = 21.0
 
-[node name="Player" type="KinematicBody2D"]
+[sub_resource type="CapsuleShape2D" id=13]
+radius = 6.0
+
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
 collision_layer = 6
 collision_mask = 4
 script = ExtResource( 1 )
@@ -80,6 +83,7 @@ shape = SubResource( 1 )
 position = Vector2( 0, -9 )
 frames = SubResource( 11 )
 animation = "Idle"
+frame = 5
 playing = true
 
 [node name="EyesArea" type="Area2D" parent="CollisionShape2D/Sprite"]
@@ -107,3 +111,15 @@ texture = ExtResource( 4 )
 [node name="BulletSpawnPoint" type="Position2D" parent="GunArc/Sprite"]
 position = Vector2( 18.8679, -3.77358 )
 scale = Vector2( 2, 2 )
+
+[node name="PlayerDamageTaker" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDamageTaker"]
+position = Vector2( 0, -9 )
+shape = SubResource( 13 )
+
+[node name="DicePickup" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="area_entered" from="PlayerDamageTaker" to="." method="_on_PlayerDamageTaker_area_entered"]

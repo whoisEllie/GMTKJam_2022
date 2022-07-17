@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FF_EFX_foley_dice_roll_felt.wav-b94ffb470cc39d49b9832b2b48faace9.sample"
+
+[deps]
+
+source_file="res://Audio/FF_EFX_foley_dice_roll_felt.wav"
+dest_files=[ "res://.import/FF_EFX_foley_dice_roll_felt.wav-b94ffb470cc39d49b9832b2b48faace9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

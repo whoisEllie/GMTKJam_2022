@@ -15,7 +15,7 @@ func _ready() -> void:
 	
 	var timer = Timer.new()
 	timer.connect("timeout", self, "roll_and_move")
-	timer.wait_time = 5
+	timer.wait_time = 1
 	timer.one_shot = true;
 	add_child(timer)
 	timer.start()
@@ -32,6 +32,7 @@ func roll_and_move():
 func handle_level_changed(current_level_name: String):
 	match current_level_name:
 		"BoardGame":
+			vars.round_count += 1
 			print(vars.tile_ids[vars.current_tile-1])
 			match vars.tile_ids[vars.current_tile-1]:
 				0:

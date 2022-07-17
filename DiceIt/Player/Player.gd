@@ -2,20 +2,23 @@ extends KinematicBody2D
 
 onready var raycast =[$Trace1, $Trace2, $Trace3, $Trace4, $Trace5]
 var ShotgunSound = preload("res://Audio/ESM_Designed_Game_Futuristic_Gun_Shot_154_Laser_Gun_Military_Pistol_Shot_Machine_Rifle_Sci_Fi_Mechanism_Alien_Space.wav")
+var DiceSound = preload("res://Audio/FF_EFX_foley_dice_roll_felt.wav")
 export (PackedScene) var bullet
-var ShotgunDamage = 10.0
 var velocity = Vector2()
+var local_movement_speed
 var rng = RandomNumberGenerator.new()
 
 var should_fire = true
 
 var timer = Timer.new()
 var shoot_timer = Timer.new()
+var slowdown_timer = Timer.new()
 
 func _ready():
 	yield(get_tree(), "idle_frame")
 	get_tree().call_group("zombies", "set_player", self)
 	$AudioStreamPlayer2D.stream = ShotgunSound
+	$DicePickup.stream = DiceSound
 	
 	timer.connect("timeout", self, "timeout")
 	timer.wait_time = vars.round_time
@@ -26,6 +29,13 @@ func _ready():
 	shoot_timer.connect("timeout", self, "shoot")
 	shoot_timer.one_shot = false;
 	add_child(shoot_timer)
+	
+	slowdown_timer.connect("timeout", self, "speed_up")
+	slowdown_timer.one_shot = true;
+	slowdown_timer.wait_time = 5.0
+	add_child(slowdown_timer)
+	
+	local_movement_speed = vars.movement_speed
 	
 	
 	
@@ -47,7 +57,7 @@ func _physics_process(delta):
 	# movement
 	var direction = get_input()
 	if direction.length() > 0:
-		velocity = lerp(velocity, direction.normalized() * vars.movement_speed, vars.acceleration)
+		velocity = lerp(velocity, direction.normalized() * local_movement_speed, vars.acceleration)
 	else:
 		velocity = lerp(velocity, Vector2.ZERO, vars.friction)
 	velocity = move_and_slide(velocity)
@@ -87,3 +97,20 @@ func shoot():
 		var bullet_transform = $GunArc/Sprite/BulletSpawnPoint.global_transform
 		rng.randomize()
 		b.transform = Transform2D(bullet_transform.get_rotation() + (rng.randf_range(-vars.bullet_spread, vars.bullet_spread) * (PI/180)), bullet_transform.get_origin())
+
+
+func take_damage():
+	print("Player takes damage")
+	slowdown_timer.stop()
+	slowdown_timer.start()
+	local_movement_speed = vars.movement_speed / 10
+	
+func speed_up():
+	local_movement_speed = vars.movement_speed
+	
+
+func play_dicepickup():
+	$DicePickup.play()
+
+func _on_PlayerDamageTaker_area_entered(area):
+	take_damage()
